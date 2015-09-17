@@ -33,9 +33,9 @@ Requires output file "gene_presence_absence.csv" from Roary
     $ roary2fripan.py --input gene_presence_absence.csv <prefix>
 
 This produces three files:
-* <prefix>.proteinortho (array of gene presence/absence)
-* <prefix>.descriptions (annotations for genes)
-* <prefix>.strains (list of strains - can be re-ordered and categories added for displaying in FriPan)
+* \<prefix\>.proteinortho (array of gene presence/absence)
+* \<prefix\>.descriptions (annotations for genes)
+* \<prefix\>.strains (list of strains - can be re-ordered and categories added for displaying in FriPan)
 
 These three files can be loaded into FriPan for viewing. See links below.
 
