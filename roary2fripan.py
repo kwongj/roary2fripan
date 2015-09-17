@@ -9,7 +9,7 @@ from argparse import RawTextHelpFormatter
 parser = argparse.ArgumentParser(
 	formatter_class=RawTextHelpFormatter,
 	description='Script to format Roary output for FriPan',
-	usage='\n  %(prog)s [OPTIONS] <PREFIX>')
+	usage='\n  %(prog)s [OPTIONS] <OUTPUT-PREFIX>')
 parser.add_argument('output', metavar='PREFIX', help='Specify output prefix')
 parser.add_argument('--input', metavar='FILE', default='gene_presence_absence.csv', help='Specify Roary output (default = "gene_presence_absence.csv")')
 parser.add_argument('--version', action='version', version=
@@ -21,11 +21,14 @@ parser.add_argument('--version', action='version', version=
 args = parser.parse_args()
 porthoFILE = str(args.output) + '.proteinortho'
 descFILE = str(args.output) + '.descriptions'
+strainsFILE = str(args.output) + '.strains'
+jsonFILE = str(args.output) + '.json'
 
 import csv
 portho = []
 desc = []
 head = []
+temp = []
 
 # Parse CSV
 with open(args.input) as csvfile:
@@ -37,7 +40,7 @@ with open(args.input) as csvfile:
 		proteins = row[4:]
 		for p in proteins:
 			if p:
-				desc.append([p, row[0]])
+				desc.append([p, str(row[0])])
 		row = [x if x != "" else '*' for x in row]
 		portho.append(row[1:])
 
@@ -52,11 +55,21 @@ with open(args.input) as csvfile:
 	header[2] = 'Alg.-Conn.'
 	portho.insert(0,header)
 
-# Write proteinortho and descriptions files
-with open(porthoFILE, 'w') as outfile:
-	out = csv.writer(outfile, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
+# Setup strains file
+	strains = sorted(header[3:])
+	b = str(len(str(len(strains))))
+	a = "%0" + b + "d"
+	strains = [(s + '\t' + str(a % (strains.index(s)+1))) for s in strains]
+	strains.insert(0,'ID\tOrder')
+	strains = ('\n'.join(map(str, strains)))
+
+# Write proteinortho, descriptions and strains files
+with open(porthoFILE, 'wb') as outfile:
+	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(portho)
 desc = sorted(desc)
-with open(descFILE, 'w') as outfile:
-	out = csv.writer(outfile, delimiter='\t')
+with open(descFILE, 'wb') as outfile:
+	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(desc)
+with open(strainsFILE, 'wb') as outfile:
+	outfile.write(strains)
