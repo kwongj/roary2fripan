@@ -29,6 +29,7 @@ optional arguments:
 
 ## Basic syntax
 Requires output file "gene_presence_absence.csv" from Roary
+
     $ roary2fripan.py --input gene_presence_absence.csv output
 
 This produces two files:
