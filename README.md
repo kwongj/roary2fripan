@@ -43,7 +43,7 @@ These three files can be loaded into FriPan for viewing. See links below.
 Please submit via the GitHub issues page: [https://github.com/kwongj/roary2fripan/issues](https://github.com/kwongj/roary2fripan/issues)  
 
 ##Software Licence
-GPLv2: [https://github.com/MDU-PHL/ngmaster/blob/master/LICENSE](https://github.com/MDU-PHL/ngmaster/blob/master/LICENSE)
+GPLv2: [https://github.com/kwongj/roary2fripan/blob/master/LICENSE](https://github.com/kwongj/roary2fripan/blob/master/LICENSE)
 
 ## Links
 * Roary by Andrew Page - [https://github.com/sanger-pathogens/Roary](https://github.com/sanger-pathogens/Roary)
