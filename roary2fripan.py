@@ -35,7 +35,7 @@ with open(args.input) as csvfile:
 	genes = csv.reader(csvfile, delimiter=',', quotechar='"')
 	header = next(csvfile)
 	for row in genes:
-		del row[6:11]
+		del row[6:14]
 		del row[0:2]
 		proteins = row[4:]
 		for p in proteins:
@@ -48,7 +48,7 @@ with open(args.input) as csvfile:
 	header = header[:-2]
 	header = header.replace('"','').strip()
 	header = header.split(',')
-	del header[6:11]
+	del header[6:14]
 	del header[0:3]
 	header[0] = '# Species'
 	header[1] = 'Genes'
@@ -67,9 +67,16 @@ with open(args.input) as csvfile:
 with open(porthoFILE, 'wb') as outfile:
 	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(portho)
+print 'Writing %s ... ' % porthoFILE
+
 desc = sorted(desc)
 with open(descFILE, 'wb') as outfile:
 	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(desc)
+print 'Writing %s ... ' % descFILE
+
 with open(strainsFILE, 'wb') as outfile:
 	outfile.write(strains)
+print 'Writing %s ... ' % strainsFILE
+
+print 'Done.'
