@@ -3,6 +3,7 @@
 # Script to format Roary output for FriPan
 
 # Usage
+from __future__ import print_function
 import argparse
 from argparse import RawTextHelpFormatter
 
@@ -40,12 +41,14 @@ with open(args.input) as csvfile:
 		proteins = row[4:]
 		for p in proteins:
 			if p:
+				p = p.replace("\t",",")			# Fix paralogs separated by tab space
 				desc.append([p, str(row[0])])
-		row = [x if x != "" else '*' for x in row]
+		print(row)
+		row = [x.replace("\t",",") if x != "" else '*' for x in row]
+		print(row)
 		portho.append(row[1:])
 
 # Fix header
-	header = header[:-2]
 	header = header.replace('"','').strip()
 	header = header.split(',')
 	del header[6:14]
@@ -67,16 +70,16 @@ with open(args.input) as csvfile:
 with open(porthoFILE, 'wb') as outfile:
 	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(portho)
-print 'Writing %s ... ' % porthoFILE
+print('Writing {} ... '.format(porthoFILE))
 
 desc = sorted(desc)
 with open(descFILE, 'wb') as outfile:
 	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(desc)
-print 'Writing %s ... ' % descFILE
+print('Writing {} ... '.format(descFILE))
 
 with open(strainsFILE, 'wb') as outfile:
 	outfile.write(strains)
-print 'Writing %s ... ' % strainsFILE
+print('Writing {} ... '.format(strainsFILE))
 
-print 'Done.'
+print('Done.')
