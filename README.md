@@ -6,7 +6,7 @@ Jason Kwong (@kwongjc)
 GitHub: [kwongj](https://github.com/kwongj)  
 
 ## Dependencies
-* [Python 2.x](https://www.python.org/downloads/)
+* [Python 3.x](https://www.python.org/downloads/)
 
 ## Usage
 `$ roary2fripan.py -h`  

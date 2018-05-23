@@ -1,12 +1,27 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Script by Jason Kwong
 # Script to format Roary output for FriPan
 
 # Usage
-from __future__ import print_function
 import argparse
 from argparse import RawTextHelpFormatter
+import os
+import sys
 import csv
+
+# Log a message to stderr
+def msg(*args, **kwargs):
+	print(*args, file=sys.stderr, **kwargs)
+
+# Log an error to stderr and quit with non-zero error code
+def err(*args, **kwargs):
+	msg(*args, **kwargs)
+	sys.exit(1);
+
+# Check file exists
+def check_file(f):
+	if os.path.isfile(f) == False:
+		err('ERROR: Cannot find "{}". Check file exists in the specified directory.'.format(f))
 
 parser = argparse.ArgumentParser(
 	formatter_class=RawTextHelpFormatter,
@@ -14,13 +29,14 @@ parser = argparse.ArgumentParser(
 	usage='\n  %(prog)s [OPTIONS] <OUTPUT-PREFIX>')
 parser.add_argument('output', metavar='PREFIX', help='Specify output prefix')
 parser.add_argument('--input', metavar='FILE', default='gene_presence_absence.csv', help='Specify Roary output (default = "gene_presence_absence.csv")')
-parser.add_argument('--version', action='version', version='v0.2')
+parser.add_argument('--version', action='version', version='v0.3-beta')
 args = parser.parse_args()
 
 porthoFILE = str(args.output) + '.proteinortho'
 descFILE = str(args.output) + '.descriptions'
 strainsFILE = str(args.output) + '.strains'
-jsonFILE = str(args.output) + '.json'
+# In development - generate json file for ordering genes
+#jsonFILE = str(args.output) + '.json'
 
 portho = []
 desc = []
@@ -28,6 +44,7 @@ head = []
 temp = []
 
 # Parse CSV
+check_file(args.input)
 with open(args.input) as csvfile:
 	genes = csv.reader(csvfile, delimiter=',', quotechar='"')
 	header = next(csvfile)
@@ -64,16 +81,16 @@ with open(args.input) as csvfile:
 with open(porthoFILE, 'w') as outfile:
 	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(portho)
-print('Writing {} ... '.format(porthoFILE))
+msg('Writing {} ... '.format(porthoFILE))
 
 desc = sorted(desc)
 with open(descFILE, 'w') as outfile:
 	out = csv.writer(outfile, delimiter='\t', lineterminator='\n')
 	out.writerows(desc)
-print('Writing {} ... '.format(descFILE))
+msg('Writing {} ... '.format(descFILE))
 
 with open(strainsFILE, 'w') as outfile:
 	outfile.write(strains)
-print('Writing {} ... '.format(strainsFILE))
+msg('Writing {} ... '.format(strainsFILE))
 
-print('Done.')
+msg('Done.')
