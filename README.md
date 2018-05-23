@@ -1,5 +1,5 @@
 # roary2fripan
-Formats Roary output for viewing in FriPan
+Formats [Roary](https://github.com/sanger-pathogens/Roary) output for viewing in [FriPan](http://drpowell.github.io/FriPan/)
 
 ## Author
 Jason Kwong (@kwongjc)  
@@ -7,8 +7,6 @@ GitHub: [kwongj](https://github.com/kwongj)
 
 ## Dependencies
 * [Python 2.x](https://www.python.org/downloads/)
-* [Roary](https://github.com/sanger-pathogens/Roary)
-* [FriPan](http://drpowell.github.io/FriPan/)
 
 ## Usage
 `$ roary2fripan.py -h`  
